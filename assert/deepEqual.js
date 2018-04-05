@@ -19,22 +19,21 @@ print('fail message사용 예제', () => {
 
 // deepEqual은 enumerable 한 '소유 속성'만 추상비교 하기때문에 의외의 결과가 나오기도 합니다.
 
-print('간단한 Paradox', () => {
+print('Paradox', () => {
   const regex = /test/gi;
   const date = new Date();
 
-  const regexProps = Object.keys(regex);
-  const dateProps = Object.keys(date);
+  const regexProps = Object.getOwnPropertyNames(regex);
+  const dateProps = Object.getOwnPropertyNames(date);
+  const regexEnumerable = Object.keys(regex);
+  const dateEnumerable = Object.keys(date);
 
-  // regex == date는 false 이지만 두 객체의 property 들이 모두 []이기 때문에 아래 assertion 은 pass 하게 됩니다.
-  // 이처럼 deepEqual은 객체의 '소유 속성'만으로 두 객체를 비교함을 알 수 있습니다.
+  // 간단하게 getOwnPropertyNames을 출력 해 보면 ['lastIndex']와 []로 다름을 알 수있습니다.
   console.log('regexProps:', regexProps, 'dateProps:', dateProps);
+  // 이 외에도 regex객체와 date객체는 prototype 으로가지는 함수들까지 많이 다른 객체이지만, enumerable한 속성은 둘 다 []로 나타납니다.
+  console.log('regexEnumerable:', regexEnumerable, 'dateEnumerable:', dateEnumerable);
+  // 따라서 아래 예제는 pass하게 됩니다.
   assert.deepEqual(regex, date);
-});
-
-print('Paradox 2', () => {
-  // 위와 같은 방식으로 {}, 와 [] 의 assertion 도 pass 하게 됩니다.
-  assert.deepEqual({}, []);
 });
 
 print('추상비교 예제', () => {
