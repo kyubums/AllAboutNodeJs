@@ -1,6 +1,22 @@
 const assert = require('assert');
 const print = require('./print');
 
+// 사용법
+print('pass 예제', () => {
+  assert.deepEqual({ a: 1 }, { a: 1 });
+});
+
+print('fail 예제', () => {
+  // assert.deepEqual은 테스트에 실패하면 에러를 throw 합니다. print 에서는 catch 하여 console.log로 출력되도록 작성 해 두었습니다.
+  // 기본적으로 AssertionError: actual deepEqual expected 를 에러 메시지로 보여줍니다.
+  assert.deepEqual({ a: 1 }, { a: 2 });
+});
+
+print('fail message사용 예제', () => {
+  // message 파라미터를 사용하여 에러 메시지를 변경할 수 있습니다.
+  assert.deepEqual({ a: 1 }, { a: 2 }, '실패 시 이 메시지를 출력합니다.');
+});
+
 // deepEqual은 enumerable 한 '소유 속성'만 추상비교 하기때문에 의외의 결과가 나오기도 합니다.
 
 print('간단한 Paradox', () => {
