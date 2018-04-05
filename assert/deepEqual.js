@@ -37,6 +37,11 @@ print('Paradox 2', () => {
   assert.deepEqual({}, []);
 });
 
+print('추상비교 예제', () => {
+  // 1 !== '1' 이지만, 추상비교 == 를 사용하기 때문에 아래 예제는 pass하게 됩니다.
+  assert.deepEqual({ a: 1 }, { a: '1' });
+});
+
 const obj1 = {
   a: {
     b: 1
